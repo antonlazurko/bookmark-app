@@ -15,8 +15,8 @@
 
   const onSubmit = async () => {
     if (!form.value.email || !form.value.password) return
-    await authStore.fetchLogin(form.value)
-    if (authStore.token) router.push({ name: 'home' })
+    const success = await authStore.fetchLogin(form.value)
+    if (success) router.push({ name: 'home' })
   }
 </script>
 

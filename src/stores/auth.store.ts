@@ -34,8 +34,11 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const data = await login(credentials)
       setToken(data.token)
+      return true
     } catch (e) {
       error.value = e instanceof Error ? e.message : 'Unknown error'
+      setToken(undefined)
+      return false
     } finally {
       isLoading.value = false
     }

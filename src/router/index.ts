@@ -46,11 +46,9 @@ router.beforeEach(async (to) => {
   const categoriesStore = useCategoriesStore()
   await categoriesStore.ensureCategories()
 
-  // On a load error the toast is already shown, so don't mask it with a 404
   if (categoriesStore.error) return
 
   if (!categoriesStore.getCategoryByAlias(to.params.alias)) {
-    // Show the 404 page while keeping the requested URL in the address bar
     return {
       name: '404',
       params: { pathMatch: to.path.substring(1).split('/') },
