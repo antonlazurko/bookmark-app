@@ -23,7 +23,7 @@
     gap: 200px;
     min-height: calc(100vh - 140px);
     min-width: 1450px;
-    margin: 140px auto 0 auto;
+    margin: 100px auto 0 auto;
   }
   .nav {
     min-width: 320px;

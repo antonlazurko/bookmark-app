@@ -5,6 +5,7 @@
   import { useCategoriesStore } from '@/stores/categories.store'
 
   import EnterIcon from './icons/EnterIcon.vue'
+  import PlusIcon from './icons/PlusIcon.vue'
 
   const categoriesStore = useCategoriesStore()
 
