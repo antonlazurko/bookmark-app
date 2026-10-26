@@ -12,7 +12,7 @@ http.interceptors.response.use(
   (error) => {
     if (!axios.isCancel(error)) {
       const message = axios.isAxiosError(error)
-        ? (error.response?.data?.message ?? error.message)
+        ? (error.response?.data?.message ?? error.response?.data?.error ?? error.message)
         : 'Unknown error'
       useToastStore().error(message)
     }

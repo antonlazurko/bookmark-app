@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import { useCategoriesStore } from '@/stores/categories.store'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -36,6 +38,26 @@ const router = createRouter({
       ],
     },
   ],
+})
+
+router.beforeEach(async (to) => {
+  if (to.name !== 'category') return
+
+  const categoriesStore = useCategoriesStore()
+  await categoriesStore.ensureCategories()
+
+  // On a load error the toast is already shown, so don't mask it with a 404
+  if (categoriesStore.error) return
+
+  if (!categoriesStore.getCategoryByAlias(to.params.alias)) {
+    // Show the 404 page while keeping the requested URL in the address bar
+    return {
+      name: '404',
+      params: { pathMatch: to.path.substring(1).split('/') },
+      query: to.query,
+      hash: to.hash,
+    }
+  }
 })
 
 export default router

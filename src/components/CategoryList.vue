@@ -10,7 +10,7 @@
   const categoriesStore = useCategoriesStore()
 
   onMounted(() => {
-    categoriesStore.fetchCategories()
+    categoriesStore.ensureCategories()
   })
 </script>
 

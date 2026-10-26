@@ -20,6 +20,15 @@ export const useCategoriesStore = defineStore('categories', () => {
       isLoading.value = false
     }
   }
+  let loading: Promise<void> | undefined
+
+  // Loads categories once; concurrent callers share the same request
+  const ensureCategories = async () => {
+    if (categories.value.length) return
+    loading ??= fetchCategories().finally(() => (loading = undefined))
+    await loading
+  }
+
   function getCategoryByAlias(alias?: string | string[]): ICategory | undefined {
     if (typeof alias == 'string') {
       return categories.value.find((c) => c.alias == alias)
@@ -27,5 +36,5 @@ export const useCategoriesStore = defineStore('categories', () => {
     return
   }
 
-  return { categories, fetchCategories, getCategoryByAlias, isLoading, error }
+  return { categories, fetchCategories, ensureCategories, getCategoryByAlias, isLoading, error }
 })
