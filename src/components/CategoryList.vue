@@ -21,10 +21,10 @@
       :key="category.id"
       class="categories-list__item"
     >
-      <RouterLink :to="`/${category.alias}`">{{ category.name }}</RouterLink>
+      <RouterLink :to="`/main/${category.alias}`">{{ category.name }}</RouterLink>
     </li>
     <li class="categories-list__item">
-      <RouterLink :to="`/new`">
+      <RouterLink :to="`/main/new`">
         New category <PlusIcon :color="'var(--color-fg-hover)'" />
       </RouterLink>
     </li>

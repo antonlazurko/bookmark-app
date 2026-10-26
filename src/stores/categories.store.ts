@@ -5,7 +5,7 @@ import { getCategories } from '@/api/categories'
 import type { ICategory } from '@/interfaces/category.interface'
 
 export const useCategoriesStore = defineStore('categories', () => {
-  const categories = ref<ICategory[]>()
+  const categories = ref<ICategory[]>([])
   const isLoading = ref(false)
   const error = ref<string>()
 
@@ -20,6 +20,12 @@ export const useCategoriesStore = defineStore('categories', () => {
       isLoading.value = false
     }
   }
+  function getCategoryByAlias(alias?: string | string[]): ICategory | undefined {
+    if (typeof alias == 'string') {
+      return categories.value.find((c) => c.alias == alias)
+    }
+    return
+  }
 
-  return { categories, fetchCategories, isLoading, error }
+  return { categories, fetchCategories, getCategoryByAlias, isLoading, error }
 })
