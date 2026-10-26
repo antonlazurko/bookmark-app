@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
 
   import Button from '@/components/Button.vue'
   import EnterIcon from '@/components/icons/EnterIcon.vue'
@@ -7,20 +8,23 @@
   import type { ILoginRequest } from '@/interfaces/auth.interface'
   import { useAuthStore } from '@/stores/auth.store'
 
+  const router = useRouter()
   const authStore = useAuthStore()
 
   const form = ref<ILoginRequest>({ email: '', password: '' })
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!form.value.email || !form.value.password) return
-    authStore.fetchLogin(form.value)
+    await authStore.fetchLogin(form.value)
+    if (authStore.token) router.push({ name: 'home' })
   }
 </script>
 
 <template>
   <div class="auth">
     <h1 class="auth__title">Bookmarkly</h1>
-    <form class="auth__form" @submit.prevent="onSubmit">
+    <span v-if="authStore.isLoading">Loading</span>
+    <form v-else class="auth__form" @submit.prevent="onSubmit">
       <InputDefault v-model="form.email" placeholder="Email" type="email" />
       <InputDefault v-model="form.password" placeholder="Password" type="password" />
       <p v-if="authStore.error" class="auth__error">{{ authStore.error }}</p>
@@ -28,10 +32,9 @@
         <template #icon>
           <EnterIcon color="var(--color-fg)" />
         </template>
-        Enter
+        Login
       </Button>
     </form>
-    {{ authStore.token }}
   </div>
 </template>
 
