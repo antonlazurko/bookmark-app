@@ -1,15 +1,22 @@
 <script setup lang="ts">
-  type ProfileAvatarProps = {
-    name: string
-  }
-  const { name } = defineProps<ProfileAvatarProps>()
+  import { onMounted } from 'vue'
+
+  import { useProfileStore } from '@/stores/profile.store'
+
+  const profileStore = useProfileStore()
+
+  onMounted(() => {
+    profileStore.fetchProfile()
+  })
 </script>
 
 <template>
   <div class="profile-avatar">
     <img src="/avatar.png" class="profile-avatar__image" alt="User avatar" />
-    <div>
-      Hello, <strong>{{ name }}</strong>
+    <div v-if="profileStore.isLoading">Loading profile....</div>
+    <div v-else-if="profileStore.error">{{ profileStore.error }}</div>
+    <div v-else-if="profileStore.profile">
+      Hello, <strong>{{ profileStore.profile.name }}</strong>
     </div>
   </div>
 </template>

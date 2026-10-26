@@ -1,24 +1,16 @@
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue'
-
-  import { getProfile } from './api/services.ts'
   import ProfileView from './components/ProfileView.vue'
-  import type { IProfile } from './interfaces/profile'
-
-  const profile = ref<IProfile>()
-
-  onMounted(async () => {
-    profile.value = await getProfile()
-  })
+  import ToastContainer from './components/ToastContainer.vue'
 </script>
 
 <template>
   <div class="app">
     <nav class="nav">
-      <ProfileView v-if="profile" :name="profile?.name" />
+      <ProfileView />
     </nav>
     <main>Section</main>
   </div>
+  <ToastContainer />
 </template>
 
 <style lang="scss" scoped>
