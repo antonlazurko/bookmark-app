@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import CategoryList from './components/CategoryList.vue'
   import ProfileView from './components/ProfileView.vue'
   import ToastContainer from './components/ToastContainer.vue'
 </script>
@@ -7,6 +8,7 @@
   <div class="app">
     <nav class="nav">
       <ProfileView />
+      <CategoryList />
     </nav>
     <main>Section</main>
   </div>
