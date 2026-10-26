@@ -1,0 +1,24 @@
+:root {
+  --color-bg: #ffffff;
+  --color-bg-hover: #dedede;
+  --color-fg: #1c1c1c;
+  --color-fg-hover: #3d3d3d;
+  --color-inactive: rgba(28, 28, 28, 0.4);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  color: var(--color-fg);
+  background: var(--color-bg);
+  font-family: 'Public Sans', sans-serif;
+  font-size: 14px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
