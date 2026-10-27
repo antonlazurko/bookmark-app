@@ -106,10 +106,9 @@ Also:
 
 Each push to `master` runs [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which lints, checks formatting, type-checks, builds and publishes the app to GitHub Pages.
 
-One-time setup in the GitHub repository:
+One-time setup in the GitHub repository: **Settings → Pages → Source**: select **GitHub Actions**.
 
-1. **Settings → Secrets and variables → Actions → Variables**: add a variable `API_BASE` with the backend URL, e.g. `https://<your-service>.onrender.com/api`
-2. **Settings → Pages → Source**: select **GitHub Actions**
+The production API URL is set in [`.env.production`](.env.production), which Vite loads on `vite build`. It is not a secret: the URL ends up in the client bundle anyway. Change it there if the backend moves.
 
 The build uses `base: '/bookmark-app/'` (see [`vite.config.ts`](vite.config.ts)). If the repository is renamed, update `base` to match.
 
