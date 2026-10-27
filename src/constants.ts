@@ -11,4 +11,5 @@ export const API_ROUTES = {
   },
   PUT_CATEGORY_NAME: (id: number) => `/categories/${id}`,
   DELETE_CATEGORY_BY_ID: (id: number) => `/categories/${id}`,
+  DELETE_BOOKMARK_BY_ID: (id: number) => `/bookmarks/${id}`,
 }
