@@ -33,7 +33,13 @@
     <LoadingSpinner v-if="categoriesStore.isLoading" size="24" />
     <form v-else class="add-category__form" @submit.prevent="onSubmit">
       <label for="category">Category name:</label>
-      <InputDefault id="category" v-model="form" placeholder="Category name" name="category" />
+      <InputDefault
+        id="category"
+        v-model="form"
+        v-focus
+        placeholder="Category name"
+        name="category"
+      />
       <Button type="submit" :disabled="!name || !!error">
         <template #icon>
           <PlusIcon color="var(--color-green)" />
@@ -66,6 +72,20 @@
       gap: 10px;
       label {
         white-space: nowrap;
+      }
+    }
+    @media (max-width: 768px) {
+      padding: 16px;
+      &__form {
+        flex-wrap: wrap;
+        label {
+          flex-basis: 100%;
+        }
+        :deep(.input-default) {
+          flex: 1;
+          width: auto;
+          min-width: 0;
+        }
       }
     }
     &__hint {

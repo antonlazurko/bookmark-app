@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { nextTick, onBeforeUnmount, ref, useId, watch } from 'vue'
+  import { nextTick, onBeforeUnmount, useId, useTemplateRef, watch } from 'vue'
 
-  // Shared popup shell: overlay, animation, Esc / outside click to close, focus on open.
   const { title, role = 'dialog' } = defineProps<{
     title: string
     role?: 'dialog' | 'alertdialog'
@@ -9,7 +8,7 @@
   const emit = defineEmits<{ close: [] }>()
   const isOpen = defineModel<boolean>('open', { default: false })
 
-  const popupRef = ref<HTMLElement>()
+  const popupRef = useTemplateRef<HTMLElement>('popup')
   const titleId = useId()
 
   const close = () => {
@@ -24,9 +23,8 @@
     if (value) {
       document.addEventListener('keydown', onKeydown)
       await nextTick()
-      // Focus the first field if there is one, otherwise the popup itself
-      const field = popupRef.value?.querySelector<HTMLElement>('input, textarea, select')
-      ;(field ?? popupRef.value)?.focus()
+      // Content can pick its own field with v-focus; otherwise keep focus inside the popup
+      if (!popupRef.value?.contains(document.activeElement)) popupRef.value?.focus()
     } else {
       document.removeEventListener('keydown', onKeydown)
     }
@@ -39,7 +37,7 @@
     <Transition name="popup">
       <div v-if="isOpen" class="popup-overlay" @click.self="close">
         <div
-          ref="popupRef"
+          ref="popup"
           class="popup"
           :role="role"
           aria-modal="true"

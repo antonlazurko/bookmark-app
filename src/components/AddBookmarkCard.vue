@@ -66,6 +66,7 @@
         <InputDefault
           id="bookmark-url"
           v-model="form.url"
+          v-focus
           placeholder="https://example.com"
           name="bookmark-url"
           :disabled="bookmarksStore.isCreating"
@@ -137,6 +138,9 @@
       :deep(svg) {
         color: var(--color-green) !important;
       }
+    }
+    @media (max-width: 480px) {
+      min-height: 160px;
     }
   }
   .add-bookmark-form {

@@ -29,11 +29,18 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
+    padding: 16px;
+    text-align: center;
     &__title {
       margin: 30px;
       font-size: 48px;
       font-weight: 600;
+    }
+    @media (max-width: 480px) {
+      &__title {
+        font-size: 32px;
+      }
     }
   }
 </style>

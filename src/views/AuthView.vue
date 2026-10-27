@@ -45,18 +45,26 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
+    padding: 16px;
     &__title {
       margin: 30px;
       font-size: 48px;
       font-weight: 600;
     }
     &__form {
-      width: 400px;
+      width: 100%;
+      max-width: 400px;
       display: flex;
       flex-direction: column;
       gap: 20px;
-      margin: 30px;
+      margin: 30px 0;
+    }
+    @media (max-width: 480px) {
+      &__title {
+        margin: 20px;
+        font-size: 36px;
+      }
     }
     &__error {
       color: red;

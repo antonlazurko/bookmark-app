@@ -11,6 +11,7 @@ Log in, organize links into categories and save bookmarks with a title and previ
 - Bookmarks: add by link, with an optional custom title and image (otherwise the server takes them from the page), open and delete
 - Responsive bookmark grid that adapts to the number of cards, with enter / leave animations
 - Toast notifications for successful actions and API errors
+- Mobile-friendly layout: on phones and tablets the side menu turns into a slide-out drawer (see [Responsive layout](#responsive-layout))
 
 ## Tech stack
 
@@ -54,6 +55,7 @@ A pre-commit hook runs ESLint and Prettier on staged files.
 src/
 ├── api/                # Axios instance (http.ts) and requests per resource
 ├── constants.ts        # API base URL, API routes, storage keys
+├── directives/         # Global directives (v-focus)
 ├── interfaces/         # TypeScript types for API data
 ├── stores/             # Pinia stores: auth, profile, categories, bookmarks, toast
 ├── router/index.ts     # Routes and the auth / category guard
@@ -84,6 +86,21 @@ Views call Pinia store actions, stores call functions from `src/api/`, and those
 
 - the request interceptor adds `Authorization: Bearer <token>` from `localStorage`
 - the response interceptor shows a success toast when a request passes `successMessage`, and an error toast for any failed request (unless `silent: true`)
+
+### Responsive layout
+
+Styles are desktop-first, with media queries inside each component. Two breakpoints are used:
+
+| Breakpoint | Changes                                                                                                                                                                                                                                           |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `≤ 768px`  | The side menu becomes a drawer opened from a sticky header with a burger button. It closes on navigation, overlay click or `Esc`, and page scroll is locked while it is open. Forms wrap the label above the input; smaller paddings and headings |
+| `≤ 480px`  | Bookmarks go into a single column, toasts span the screen width, smaller titles on the login and 404 pages                                                                                                                                        |
+
+Also:
+
+- Hover zoom on buttons and menu links only applies on devices with a mouse (`@media (hover: hover)`), so it doesn't stick after a tap
+- Inputs use a 16px font on mobile so iOS Safari doesn't zoom in on focus
+- Popups fit the screen with a 16px margin at any width
 
 ## Deployment
 
