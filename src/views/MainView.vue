@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import CategoryList from '../components/CategoryList.vue'
-  import ProfileView from '../components/ProfileView.vue'
+  import CategoryList from '@/components/CategoryList.vue'
+  import ProfileView from '@/components/ProfileView.vue'
 </script>
 
 <template>
@@ -19,9 +19,9 @@
   .app {
     display: flex;
     gap: 200px;
-    min-height: calc(100vh - 140px);
-    min-width: 1450px;
-    margin: 100px auto 0 auto;
+    min-height: 100vh;
+    padding-top: 30px;
+    margin: 0 auto;
   }
   .nav {
     min-width: 320px;

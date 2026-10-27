@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import { useAuthStore } from '@/stores/auth.store'
 import { useCategoriesStore } from '@/stores/categories.store'
 
 const router = createRouter({
@@ -41,9 +42,16 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
+  const authStore = useAuthStore()
+
+  if (!authStore.isAuthenticated && to.name !== 'auth' && to.name !== '404') {
+    return { name: 'auth' }
+  }
+
   if (to.name !== 'category') return
 
   const categoriesStore = useCategoriesStore()
+
   await categoriesStore.ensureCategories()
 
   if (categoriesStore.error) return

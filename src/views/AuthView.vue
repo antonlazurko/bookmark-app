@@ -5,6 +5,7 @@
   import Button from '@/components/Button.vue'
   import EnterIcon from '@/components/icons/EnterIcon.vue'
   import InputDefault from '@/components/InputDefault.vue'
+  import LoadingSpinner from '@/components/LoadingSpinner.vue'
   import type { ILoginRequest } from '@/interfaces/auth.interface'
   import { useAuthStore } from '@/stores/auth.store'
 
@@ -23,7 +24,7 @@
 <template>
   <div class="auth">
     <h1 class="auth__title">Bookmarkly</h1>
-    <span v-if="authStore.isLoading">Loading</span>
+    <LoadingSpinner v-if="authStore.isLoading" />
     <form v-else class="auth__form" @submit.prevent="onSubmit">
       <InputDefault v-model="form.email" placeholder="Email" type="email" />
       <InputDefault v-model="form.password" placeholder="Password" type="password" />

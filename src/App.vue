@@ -3,8 +3,10 @@
 </script>
 
 <template>
-  <RouterView />
-  <ToastContainer />
+  <div class="app">
+    <RouterView />
+    <ToastContainer />
+  </div>
 </template>
 
 <style lang="scss" scoped></style>

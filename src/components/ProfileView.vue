@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { onMounted } from 'vue'
 
+  import LoadingSpinner from '@/components/LoadingSpinner.vue'
   import { useProfileStore } from '@/stores/profile.store'
 
   const profileStore = useProfileStore()
@@ -13,7 +14,7 @@
 <template>
   <div class="profile-avatar">
     <img src="/avatar.png" class="profile-avatar__image" alt="User avatar" />
-    <div v-if="profileStore.isLoading">Loading profile....</div>
+    <LoadingSpinner v-if="profileStore.isLoading" size="18"></LoadingSpinner>
     <div v-else-if="profileStore.error">{{ profileStore.error }}</div>
     <div v-else-if="profileStore.profile">
       Hello, <strong>{{ profileStore.profile.name }}</strong>
@@ -24,8 +25,9 @@
 <style scoped lang="scss">
   .profile-avatar {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    box-sizing: content-box;
+    padding-left: 15px;
     gap: 20px;
     font-size: 18px;
     &__image {

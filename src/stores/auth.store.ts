@@ -38,6 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
     } catch (e) {
       error.value = e instanceof Error ? e.message : 'Unknown error'
       setToken(undefined)
+      isLoading.value = false
       return false
     } finally {
       isLoading.value = false
