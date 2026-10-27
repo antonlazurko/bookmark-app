@@ -4,6 +4,22 @@ A bookmark manager built with Vue 3, Pinia and Vite. Live demo: https://antonlaz
 
 Log in, organize links into categories and save bookmarks with a title and preview image. The backend lives in a separate repo: [bookmark-server](https://github.com/antonlazurko/bookmark-server).
 
+## Try it
+
+1. Open the live demo: https://antonlazurko.github.io/bookmark-app/
+2. Log in with the demo account:
+
+   | Email                 | Password   |
+   | --------------------- | ---------- |
+   | `demo@bookmarkly.app` | `demo1234` |
+
+3. Pick a category in the menu (on mobile, open it with the ☰ button) or create your own, then add a bookmark with the **+** card.
+
+> **Heads-up**
+>
+> - The backend runs on Render's free plan and sleeps when idle, so the first login can take up to a minute. If you see an error, wait a bit and try again.
+> - The demo data is shared between all visitors and may be reset at any time, so feel free to add, rename or delete anything.
+
 ## Features
 
 - Login with a JWT token that persists across reloads; routes are protected by an auth guard
