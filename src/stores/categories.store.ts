@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-import { deleteCategoryById, getCategories, putCategoryName } from '@/api/categories'
+import { deleteCategoryById, getCategories, postCategory, putCategoryName } from '@/api/categories'
 import type { ICategory } from '@/interfaces/category.interface'
 
 export const useCategoriesStore = defineStore('categories', () => {
@@ -36,6 +36,18 @@ export const useCategoriesStore = defineStore('categories', () => {
     return
   }
 
+  const createCategory = async (name: string) => {
+    isLoading.value = true
+    try {
+      const category = await postCategory(name)
+      categories.value.push(category)
+      isLoading.value = false
+      return category
+    } catch (e) {
+      error.value = e instanceof Error ? e.message : 'Unknown error'
+      isLoading.value = false
+    }
+  }
   const updateCategory = async (id: number, name: string) => {
     isLoading.value = true
     try {
@@ -69,6 +81,7 @@ export const useCategoriesStore = defineStore('categories', () => {
     fetchCategories,
     ensureCategories,
     getCategoryByAlias,
+    createCategory,
     updateCategory,
     deleteCategory,
     isLoading,

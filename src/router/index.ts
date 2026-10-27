@@ -18,18 +18,17 @@ const router = createRouter({
     },
     {
       path: '/main',
-      name: 'home',
       component: () => import('@/views/MainView.vue'),
       children: [
         {
           path: '',
-          name: 'index',
+          name: 'home',
           component: () => import('@/views/IndexView.vue'),
         },
         {
           path: '/main/new',
-          name: 'add-edit-category',
-          component: () => import('@/views/AddEditCategoryView.vue'),
+          name: 'add-category',
+          component: () => import('@/views/AddCategoryView.vue'),
         },
         {
           path: ':alias',

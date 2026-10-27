@@ -9,6 +9,7 @@ export const API_ROUTES = {
     LOGIN: '/auth/login',
     PROFILE: '/auth/profile',
   },
+  POST_CATEGORY: '/categories',
   PUT_CATEGORY_NAME: (id: number) => `/categories/${id}`,
   DELETE_CATEGORY_BY_ID: (id: number) => `/categories/${id}`,
   DELETE_BOOKMARK_BY_ID: (id: number) => `/bookmarks/${id}`,
