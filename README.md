@@ -11,7 +11,7 @@ Log in, organize links into categories and save bookmarks with a title and previ
 
    | Email                 | Password   |
    | --------------------- | ---------- |
-   | `demo@bookmarkly.app` | `demo1234` |
+   | `qauser@test.com` | `qauser` |
 
 3. Pick a category in the menu (on mobile, open it with the ☰ button) or create your own, then add a bookmark with the **+** card.
 
