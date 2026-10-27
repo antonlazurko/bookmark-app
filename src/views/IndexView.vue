@@ -14,6 +14,8 @@
     align-items: center;
     justify-content: center;
     min-height: 50vh;
+    padding: 16px;
+    text-align: center;
     &__header {
       font-size: 24px;
       font-weight: 500;

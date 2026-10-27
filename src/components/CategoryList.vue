@@ -59,6 +59,15 @@
       min-width: 300px;
       min-height: 500px;
     }
+    @media (max-width: 768px) {
+      margin-top: 20px;
+      gap: 16px;
+      font-size: 18px;
+      &__empty {
+        min-width: 0;
+        min-height: 200px;
+      }
+    }
     &__item {
       a {
         display: inline-flex;
@@ -74,9 +83,11 @@
         transition:
           color 0.2s ease-in-out,
           transform 0.2s ease-in-out;
-        &:hover {
-          color: var(--color-fg-hover);
-          transform: scale(1.1);
+        @media (hover: hover) {
+          &:hover {
+            color: var(--color-fg-hover);
+            transform: scale(1.1);
+          }
         }
         &.router-link-active {
           color: var(--color-fg-hover);

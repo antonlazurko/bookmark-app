@@ -47,6 +47,10 @@ router.beforeEach(async (to) => {
     return { name: 'auth' }
   }
 
+  if (authStore.isAuthenticated && to.name === 'auth') {
+    return { name: 'home' }
+  }
+
   if (to.name !== 'category') return
 
   const categoriesStore = useCategoriesStore()

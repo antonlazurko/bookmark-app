@@ -84,7 +84,7 @@
       </div>
       <form v-else class="category__form" @submit.prevent="onSubmit">
         <label for="category">Change category name:</label>
-        <InputDefault v-model="form" placeholder="Category name" name="category" />
+        <InputDefault v-model="form" v-focus placeholder="Category name" name="category" />
         <Button type="button" @click="onClickCancel">
           <template #icon>
             <CancelIcon color="var(--color-volcano)" size="10" />
@@ -142,11 +142,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       width: 100%;
     }
     &__title {
+      min-width: 0;
       font-size: 24px;
       font-weight: 500;
+      overflow-wrap: anywhere;
     }
     &__action-button {
       display: flex;
@@ -161,6 +164,23 @@
       gap: 10px;
       label {
         white-space: nowrap;
+      }
+    }
+    @media (max-width: 768px) {
+      padding: 16px;
+      &__title {
+        font-size: 20px;
+      }
+      &__form {
+        flex-wrap: wrap;
+        label {
+          flex-basis: 100%;
+        }
+        :deep(.input-default) {
+          flex: 1;
+          width: auto;
+          min-width: 0;
+        }
       }
     }
   }
@@ -195,9 +215,16 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 24px;
+      @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
       // With 0–1 bookmarks (+ add card) don't stretch cards across the whole row
       &--few {
         grid-template-columns: repeat(auto-fill, minmax(260px, 340px));
+        @media (max-width: 480px) {
+          grid-template-columns: 1fr;
+        }
       }
     }
     &__item {

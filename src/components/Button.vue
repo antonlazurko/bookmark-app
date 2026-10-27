@@ -30,8 +30,10 @@
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
   }
-  .button:hover {
-    transform: scale(1.1);
+  @media (hover: hover) {
+    .button:hover {
+      transform: scale(1.1);
+    }
   }
   .button.disabled {
     opacity: 0.5;

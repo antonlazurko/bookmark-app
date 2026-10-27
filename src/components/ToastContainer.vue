@@ -32,6 +32,12 @@
     flex-direction: column;
     gap: 10px;
     width: 320px;
+    @media (max-width: 480px) {
+      top: 12px;
+      right: 12px;
+      left: 12px;
+      width: auto;
+    }
   }
 
   .toast {

@@ -14,5 +14,8 @@
     &::placeholder {
       color: var(--color-inactive);
     }
+    @media (max-width: 768px) {
+      font-size: 16px;
+    }
   }
 </style>
