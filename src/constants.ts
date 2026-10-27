@@ -7,5 +7,6 @@ export const API_ROUTES = {
   GET_BOOKMARKS_BY_CATEGORY_ID: (id: number) => `/categories/${id}/bookmarks`,
   AUTH: {
     LOGIN: '/auth/login',
+    PROFILE: '/auth/profile',
   },
 }
