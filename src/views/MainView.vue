@@ -18,7 +18,7 @@
 <style lang="scss" scoped>
   .app {
     display: flex;
-    gap: 200px;
+    gap: 20px;
     min-height: 100vh;
     padding-top: 30px;
     margin: 0 auto;

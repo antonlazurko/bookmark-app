@@ -6,6 +6,7 @@
 <template>
   <button
     class="button"
+    type="button"
     v-bind="$attrs"
     :class="$attrs.disabled ? 'disabled' : ''"
     @click="props.onClick"

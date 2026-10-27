@@ -7,3 +7,13 @@ export const getCategories = async () => {
   const { data } = await http.get<ICategory[]>(API_ROUTES.GET_CATEGORIES)
   return data
 }
+export const putCategoryName = async (id: number, name: string) => {
+  const { data } = await http.put<ICategory>(API_ROUTES.PUT_CATEGORY_NAME(id), {
+    name,
+    alias: name.toLowerCase(),
+  })
+  return data
+}
+export const deleteCategoryById = async (id: number) => {
+  await http.delete(API_ROUTES.DELETE_CATEGORY_BY_ID(id))
+}
