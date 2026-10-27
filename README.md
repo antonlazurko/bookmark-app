@@ -1,48 +1,101 @@
-# bookmark-app
+# Bookmarkly
 
-This template should help get you started developing with Vue 3 in Vite.
+A bookmark manager built with Vue 3, Pinia and Vite. Live demo: https://antonlazurko.github.io/bookmark-app/
 
-## Recommended IDE Setup
+Log in, organize links into categories and save bookmarks with a title and preview image. The backend lives in a separate repo: [bookmark-server](https://github.com/antonlazurko/bookmark-server).
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Features
 
-## Recommended Browser Setup
+- Login with a JWT token that persists across reloads; routes are protected by an auth guard
+- Categories: create, rename (the URL follows the new alias) and delete with a confirmation popup
+- Bookmarks: add by link, with an optional custom title and image (otherwise the server takes them from the page), open and delete
+- Responsive bookmark grid that adapts to the number of cards, with enter / leave animations
+- Toast notifications for successful actions and API errors
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Tech stack
 
-## Type Support for `.vue` Imports in TS
+- [Vue 3](https://vuejs.org/) with `<script setup>`, Composition API and TypeScript
+- [Pinia](https://pinia.vuejs.org/) for state, [Vue Router](https://router.vuejs.org/) for routing
+- [Axios](https://axios-http.com/) with interceptors for the auth header and toasts
+- [Vite](https://vite.dev/) for the dev server and build
+- SCSS for component styles
+- ESLint, oxlint, Prettier, Husky + lint-staged for code quality
+- GitHub Actions + GitHub Pages for deployment
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Getting started
 
-## Customize configuration
+Requirements: Node.js 22.18+ and a running [bookmark-server](https://github.com/antonlazurko/bookmark-server) (local or deployed).
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+```bash
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
+cp .env.example .env.local   # then set VITE_API_BASE if the API is not on localhost:3000
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+Without `VITE_API_BASE` the app talks to `http://localhost:3000/api`.
 
-```sh
-npm run build
+## Scripts
+
+| Command                | Description                                      |
+| ---------------------- | ------------------------------------------------ |
+| `npm run dev`          | Start the dev server                             |
+| `npm run build`        | Type-check and build for production into `dist/` |
+| `npm run preview`      | Serve the production build locally               |
+| `npm run type-check`   | Type-check with `vue-tsc`                        |
+| `npm run lint`         | Run oxlint and ESLint with auto-fix              |
+| `npm run format`       | Format all files with Prettier                   |
+| `npm run format:check` | Check formatting without changing files          |
+
+A pre-commit hook runs ESLint and Prettier on staged files.
+
+## Project structure
+
+```
+src/
+├── api/                # Axios instance (http.ts) and requests per resource
+├── constants.ts        # API base URL, API routes, storage keys
+├── interfaces/         # TypeScript types for API data
+├── stores/             # Pinia stores: auth, profile, categories, bookmarks, toast
+├── router/index.ts     # Routes and the auth / category guard
+├── assets/main.scss    # Global styles and CSS variables (colors, font)
+├── views/
+│   ├── AuthView.vue        # Login form
+│   ├── MainView.vue        # Layout: profile + category menu + nested routes
+│   ├── IndexView.vue       # Welcome screen
+│   ├── CategoryView.vue    # Category header, rename / delete, bookmarks grid
+│   ├── AddCategoryView.vue # New category form
+│   └── NotFoundView.vue
+└── components/
+    ├── CategoryList.vue    # Side menu with categories
+    ├── BookmarkCard.vue    # Single bookmark
+    ├── AddBookmarkCard.vue # "+" card and the new bookmark popup
+    ├── PopupBase.vue       # Popup shell: overlay, animation, Esc / outside click
+    ├── PopupConfirm.vue    # Confirm dialog built on PopupBase
+    ├── ToastContainer.vue
+    ├── LoadingSpinner.vue
+    ├── Button.vue
+    ├── InputDefault.vue
+    └── icons/              # SVG icons as components
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Data flow
 
-```sh
-npm run lint
-```
+Views call Pinia store actions, stores call functions from `src/api/`, and those use the shared Axios instance from `api/http.ts`:
+
+- the request interceptor adds `Authorization: Bearer <token>` from `localStorage`
+- the response interceptor shows a success toast when a request passes `successMessage`, and an error toast for any failed request (unless `silent: true`)
+
+## Deployment
+
+Each push to `master` runs [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which lints, checks formatting, type-checks, builds and publishes the app to GitHub Pages.
+
+One-time setup in the GitHub repository:
+
+1. **Settings → Secrets and variables → Actions → Variables**: add a variable `API_BASE` with the backend URL, e.g. `https://<your-service>.onrender.com/api`
+2. **Settings → Pages → Source**: select **GitHub Actions**
+
+The build uses `base: '/bookmark-app/'` (see [`vite.config.ts`](vite.config.ts)). If the repository is renamed, update `base` to match.
+
+GitHub Pages has no SPA routing, so the workflow copies `index.html` to `404.html`. Opening a deep link like `/bookmark-app/main/work` loads the app and Vue Router shows the right page.
+
+> **Note:** the backend on Render's free plan sleeps when idle, so the first request after a pause can take up to a minute.
