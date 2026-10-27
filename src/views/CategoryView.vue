@@ -2,6 +2,7 @@
   import { computed, ref, watch } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
 
+  import AddBookmarkCard from '@/components/AddBookmarkCard.vue'
   import BookmarkCard from '@/components/BookmarkCard.vue'
   import Button from '@/components/Button.vue'
   import CancelIcon from '@/components/icons/CancelIcon.vue'
@@ -112,16 +113,18 @@
         }}</span>
       </div>
       <LoadingSpinner v-if="bookmarksStore.isLoading" size="38"></LoadingSpinner>
-      <p v-else-if="!bookmarksCount" class="bookmarks__empty">No bookmarks in this category yet</p>
       <TransitionGroup
         v-else
         tag="ul"
         name="bookmark"
         class="bookmarks__list"
-        :class="{ 'bookmarks__list--few': bookmarksCount < 3 }"
+        :class="{ 'bookmarks__list--few': bookmarksCount < 2 }"
       >
         <li v-for="item in bookmarksStore.bookmarks" :key="item.id" class="bookmarks__item">
           <BookmarkCard v-bind="item" />
+        </li>
+        <li v-if="category" key="add" class="bookmarks__item">
+          <AddBookmarkCard :category-id="category.id" />
         </li>
       </TransitionGroup>
     </section>
@@ -185,14 +188,6 @@
       color: var(--color-fg-hover);
       font-size: 12px;
     }
-    &__empty {
-      width: 100%;
-      padding: 40px 20px;
-      border: 2px dashed var(--color-bg-hover);
-      border-radius: 20px;
-      color: var(--color-inactive);
-      text-align: center;
-    }
     &__list {
       width: 100%;
       padding: 0;
@@ -200,7 +195,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 24px;
-      // With 1–2 bookmarks don't stretch cards across the whole row
+      // With 0–1 bookmarks (+ add card) don't stretch cards across the whole row
       &--few {
         grid-template-columns: repeat(auto-fill, minmax(260px, 340px));
       }
